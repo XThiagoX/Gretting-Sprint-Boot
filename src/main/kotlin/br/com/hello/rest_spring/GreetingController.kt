@@ -6,6 +6,7 @@ import org.springframework.http.HttpEntity
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import java.util.concurrent.atomic.AtomicLong
@@ -19,15 +20,17 @@ class GreetingController {
 
     private val counter = AtomicLong()
 
-    @GetMapping("/greeting")
+    @GetMapping( value = ["/greeting/{name}/{lastName}"])
     fun greeting(
-        @RequestParam(value = "Thiago", defaultValue = "Word") value: String
+        @PathVariable(value = "name") name: String?,
+        @PathVariable(value = "lastName") lastName: String?
     ): HttpEntity<Greeting> {
 
-        val greeting = Greeting(template.format(value))
-        val controllerMethod = methodOn(GreetingController::class.java).greeting(value)
+        val greeting = Greeting(name, lastName)
+        val controllerMethod = methodOn(GreetingController::class.java).greeting(name, lastName)
         greeting.add(linkTo<GreetingController> { }.withSelfRel())
 
         return ResponseEntity(greeting, HttpStatus.OK)
     }
+
 }
