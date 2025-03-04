@@ -18,11 +18,11 @@ class CustomizedResponseEntityExeceptionHandler : ResponseEntityExceptionHandler
     @ExceptionHandler(Exception::class)
     fun handleAllExceptions( ex : Exception, resquest : WebRequest):
             ResponseEntity<ExceptionResponse> {
-        val execeptionResponse = ExceptionResponse (
+        val exceptionResponse = ExceptionResponse (
             Date(),
             ex.message,
             resquest.getDescription(false)
         )
-        return ResponseEntity<ExceptionResponse>(execeptionResponse, HttpStatus.INTERNAL_SERVER_ERROR)
+        return ResponseEntity<ExceptionResponse>(exceptionResponse, HttpStatus.INTERNAL_SERVER_ERROR)
     }
 }
