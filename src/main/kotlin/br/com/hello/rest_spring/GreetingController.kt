@@ -26,7 +26,9 @@ class GreetingController {
         @PathVariable(value = "lastName") lastName: String?
     ): HttpEntity<Greeting> {
 
-        val greeting = Greeting(name, lastName)
+        var user = User(name, lastName)
+        val greeting = Greeting(user)
+
         val controllerMethod = methodOn(GreetingController::class.java).greeting(name, lastName)
         greeting.add(linkTo<GreetingController> { }.withSelfRel())
 
